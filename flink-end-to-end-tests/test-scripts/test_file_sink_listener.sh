@@ -24,7 +24,7 @@ S3_PREFIX=temp/test_file_sink-$(uuidgen)
 OUTPUT_PATH="$TEST_DATA_DIR/$S3_PREFIX"
 S3_OUTPUT_PATH="s3://$IT_CASE_S3_BUCKET/$S3_PREFIX"
 source "$(dirname "$0")"/common.sh
-source "$(dirname "$0")"/common_s3.sh
+#source "$(dirname "$0")"/common_s3.sh
 
 # randomly set up openSSL with dynamically/statically linked libraries
 OPENSSL_LINKAGE=$(if (( RANDOM % 2 )) ; then echo "dynamic"; else echo "static"; fi)
@@ -139,9 +139,9 @@ function wait_for_complete_result {
 function run_file_sink_test {
   start_cluster
 
-  "${FLINK_DIR}/bin/taskmanager.sh" start
-  "${FLINK_DIR}/bin/taskmanager.sh" start
-  "${FLINK_DIR}/bin/taskmanager.sh" start
+#  "${FLINK_DIR}/bin/taskmanager.sh" start
+#  "${FLINK_DIR}/bin/taskmanager.sh" start
+#  "${FLINK_DIR}/bin/taskmanager.sh" start
 
   echo "Submitting job."
   CLIENT_OUTPUT=$("$FLINK_DIR/bin/flink" run -d "${TEST_PROGRAM_JAR}" --outputPath "${JOB_OUTPUT_PATH}" \
@@ -160,21 +160,6 @@ function run_file_sink_test {
 
   echo "Killing TM"
   kill_random_taskmanager
-
-  echo "Starting TM"
-  "$FLINK_DIR/bin/taskmanager.sh" start
-
-  wait_for_restart_to_complete 0 ${JOB_ID}
-
-  echo "Killing 2 TMs"
-  kill_random_taskmanager
-  kill_random_taskmanager
-
-  echo "Starting 2 TMs"
-  "$FLINK_DIR/bin/taskmanager.sh" start
-  "$FLINK_DIR/bin/taskmanager.sh" start
-
-  wait_for_restart_to_complete 1 ${JOB_ID}
 
   echo "Waiting until all values have been produced"
   wait_for_complete_result 60000 900
