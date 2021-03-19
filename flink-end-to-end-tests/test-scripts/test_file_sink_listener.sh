@@ -27,14 +27,14 @@ source "$(dirname "$0")"/common.sh
 #source "$(dirname "$0")"/common_s3.sh
 
 # randomly set up openSSL with dynamically/statically linked libraries
-OPENSSL_LINKAGE=$(if (( RANDOM % 2 )) ; then echo "dynamic"; else echo "static"; fi)
-echo "Executing test with ${OPENSSL_LINKAGE} openSSL linkage (random selection between 'dynamic' and 'static')"
+#OPENSSL_LINKAGE=$(if (( RANDOM % 2 )) ; then echo "dynamic"; else echo "static"; fi)
+#echo "Executing test with ${OPENSSL_LINKAGE} openSSL linkage (random selection between 'dynamic' and 'static')"
 
-s3_setup hadoop
-set_conf_ssl "mutual" "OPENSSL" "${OPENSSL_LINKAGE}"
-set_config_key "metrics.fetcher.update-interval" "2000"
-# this test relies on global failovers
-set_config_key "jobmanager.execution.failover-strategy" "full"
+#s3_setup hadoop
+#set_conf_ssl "mutual" "OPENSSL" "${OPENSSL_LINKAGE}"
+#set_config_key "metrics.fetcher.update-interval" "2000"
+## this test relies on global failovers
+#set_config_key "jobmanager.execution.failover-strategy" "full"
 
 mkdir -p $OUTPUT_PATH
 
