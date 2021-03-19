@@ -24,7 +24,7 @@ S3_PREFIX=temp/test_file_sink-$(uuidgen)
 OUTPUT_PATH="$TEST_DATA_DIR/$S3_PREFIX"
 S3_OUTPUT_PATH="s3://$IT_CASE_S3_BUCKET/$S3_PREFIX"
 source "$(dirname "$0")"/common.sh
-source "$(dirname "$0")"/common_s3.sh
+#source "$(dirname "$0")"/common_s3.sh
 
 # randomly set up openSSL with dynamically/statically linked libraries
 OPENSSL_LINKAGE=$(if (( RANDOM % 2 )) ; then echo "dynamic"; else echo "static"; fi)
