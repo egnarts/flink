@@ -158,9 +158,6 @@ function run_file_sink_test {
 
   wait_num_checkpoints "${JOB_ID}" 3
 
-  echo "Killing TM"
-  kill_random_taskmanager
-
   echo "Waiting until all values have been produced"
   wait_for_complete_result 60000 900
 
