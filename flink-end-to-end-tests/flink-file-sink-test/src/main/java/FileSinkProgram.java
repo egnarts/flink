@@ -62,7 +62,7 @@ public enum FileSinkProgram {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        env.setParallelism(4);
+        env.setParallelism(1);
         env.enableCheckpointing(5000L);
         env.setRestartStrategy(
                 RestartStrategies.fixedDelayRestart(
