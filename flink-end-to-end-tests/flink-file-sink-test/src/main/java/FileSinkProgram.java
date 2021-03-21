@@ -57,6 +57,9 @@ import static org.apache.flink.streaming.api.functions.sink.filesystem.Streaming
 public enum FileSinkProgram {
     ;
 
+    /**
+     * asdfasdf
+     */
     public static class DefaultRowFormatBuilder
             extends StreamingFileSink.RowFormatBuilder<
                     Tuple2<Integer, Integer>, String, DefaultRowFormatBuilder> {
