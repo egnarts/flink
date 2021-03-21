@@ -25,6 +25,9 @@ import org.apache.flink.core.fs.FileSystemKind;
 import org.apache.flink.core.fs.Path;
 import org.apache.flink.core.fs.RecoverableWriter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.Locale;
@@ -35,6 +38,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  * A {@link FileSystem} that wraps an {@link org.apache.hadoop.fs.FileSystem Hadoop File System}.
  */
 public class HadoopFileSystem extends FileSystem {
+    private static final Logger LOG = LoggerFactory.getLogger(HadoopFileSystem.class);
 
     /** The wrapped Hadoop File System. */
     private final org.apache.hadoop.fs.FileSystem fs;
@@ -185,6 +189,7 @@ public class HadoopFileSystem extends FileSystem {
 
     @Override
     public boolean rename(final Path src, final Path dst) throws IOException {
+        LOG.warn(src + " --> " + dst, new Throwable());
         return this.fs.rename(toHadoopPath(src), toHadoopPath(dst));
     }
 
