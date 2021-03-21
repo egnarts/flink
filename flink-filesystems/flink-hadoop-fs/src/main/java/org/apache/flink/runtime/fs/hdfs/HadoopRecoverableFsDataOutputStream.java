@@ -54,8 +54,6 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  */
 @Internal
 class HadoopRecoverableFsDataOutputStream extends RecoverableFsDataOutputStream {
-    private static final Logger LOG = LoggerFactory.getLogger(HadoopRecoverableFsDataOutputStream.class);
-
     private static final long LEASE_TIMEOUT = 100_000L;
 
     private static Method truncateHandle;
@@ -233,7 +231,7 @@ class HadoopRecoverableFsDataOutputStream extends RecoverableFsDataOutputStream 
      * renaming in case there is trailing garbage data.
      */
     static class HadoopFsCommitter implements Committer {
-
+        private static final Logger LOG = LoggerFactory.getLogger(HadoopFsCommitter.class);
         private final FileSystem fs;
         private final HadoopFsRecoverable recoverable;
 
