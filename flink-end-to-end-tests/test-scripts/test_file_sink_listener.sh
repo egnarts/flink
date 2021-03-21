@@ -21,7 +21,7 @@ OUT_TYPE="${1:-local}" # other type: s3
 SINK_TO_TEST="${2:-"StreamingFileSink"}"
 
 S3_PREFIX=temp/test_file_sink-$(uuidgen)
-OUTPUT_PATH="hdfs://flink/test/sink_commit_listener"
+OUTPUT_PATH="hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/test/sink_commit_listener"
 #OUTPUT_PATH="$TEST_DATA_DIR/$S3_PREFIX"
 #S3_OUTPUT_PATH="s3://$IT_CASE_S3_BUCKET/$S3_PREFIX"
 source "$(dirname "$0")"/common.sh
