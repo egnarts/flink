@@ -36,6 +36,8 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.viewfs.ViewFileSystem;
 import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.util.VersionInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,6 +54,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  */
 @Internal
 class HadoopRecoverableFsDataOutputStream extends RecoverableFsDataOutputStream {
+    private static final Logger LOG = LoggerFactory.getLogger(HadoopRecoverableFsDataOutputStream.class);
 
     private static final long LEASE_TIMEOUT = 100_000L;
 
@@ -241,6 +244,7 @@ class HadoopRecoverableFsDataOutputStream extends RecoverableFsDataOutputStream 
 
         @Override
         public void commit() throws IOException {
+            LOG.warn("" + recoverable, new Throwable());
             final Path src = recoverable.tempFile();
             final Path dest = recoverable.targetFile();
             final long expectedLength = recoverable.offset();
