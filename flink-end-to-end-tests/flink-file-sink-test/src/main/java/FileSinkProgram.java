@@ -73,7 +73,6 @@ public enum FileSinkProgram {
         // generate data, shuffle, sink
         DataStream<Tuple2<Integer, Integer>> source = env.addSource(new Generator(10, 10, 60));
 
-
         if (sinkToTest.equalsIgnoreCase("StreamingFileSink")) {
             StreamingFileSink.DefaultRowFormatBuilder<Tuple2<Integer, Integer>> builder = StreamingFileSink
                     .forRowFormat(
