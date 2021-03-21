@@ -55,6 +55,7 @@ public class HadoopFileSystem extends FileSystem {
      */
     public HadoopFileSystem(org.apache.hadoop.fs.FileSystem hadoopFileSystem) {
         this.fs = checkNotNull(hadoopFileSystem, "hadoopFileSystem");
+        LOG.info("Initialize org.apache.hadoop.fs.FileSystem({}).", fs);
     }
 
     /**
