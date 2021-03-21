@@ -58,7 +58,7 @@ public enum FileSinkProgram {
     ;
 
     /**
-     * asdfasdf
+     * asdfasdf.
      */
     public static class DefaultRowFormatBuilder
             extends StreamingFileSink.RowFormatBuilder<
