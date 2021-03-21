@@ -257,6 +257,8 @@ public class Bucket<IN, BucketID> {
     }
 
     private InProgressFileWriter.PendingFileRecoverable closePartFile() throws IOException {
+        LOG.warn("" + inProgressPart, new Throwable());
+
         InProgressFileWriter.PendingFileRecoverable pendingFileRecoverable = null;
         if (inProgressPart != null) {
             pendingFileRecoverable = inProgressPart.closeForCommit();
