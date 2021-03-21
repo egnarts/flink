@@ -284,6 +284,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
         @Internal
         @Override
         public BucketWriter<IN, BucketID> createBucketWriter() throws IOException {
+
             return new RowWiseBucketWriter<>(
                     FileSystem.get(basePath.toUri()).createRecoverableWriter(), encoder);
         }

@@ -41,6 +41,8 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import java.io.PrintStream;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSink.BucketsBuilder.DEFAULT_BUCKET_CHECK_INTERVAL;
+
 /**
  * Test program for the {@link StreamingFileSink} and {@link FileSink}.
  *
@@ -71,18 +73,31 @@ public enum FileSinkProgram {
         // generate data, shuffle, sink
         DataStream<Tuple2<Integer, Integer>> source = env.addSource(new Generator(10, 10, 60));
 
+
         if (sinkToTest.equalsIgnoreCase("StreamingFileSink")) {
-            final StreamingFileSink<Tuple2<Integer, Integer>> sink =
-                    StreamingFileSink.forRowFormat(
-                                    new Path(outputPath),
-                                    (Encoder<Tuple2<Integer, Integer>>)
-                                            (element, stream) -> {
-                                                PrintStream out = new PrintStream(stream);
-                                                out.println(element.f1);
-                                            })
-                            .withBucketAssigner(new KeyBucketAssigner())
-                            .withRollingPolicy(OnCheckpointRollingPolicy.build())
-                            .build();
+            StreamingFileSink.DefaultRowFormatBuilder<Tuple2<Integer, Integer>> builder = StreamingFileSink
+                    .forRowFormat(
+                            new Path(outputPath),
+                            (Encoder<Tuple2<Integer, Integer>>)
+                                    (element, stream) -> {
+                                        PrintStream out = new PrintStream(stream);
+                                        out.println(element.f1);
+                                    })
+                    .withBucketAssigner(new KeyBucketAssigner())
+                    .withRollingPolicy(OnCheckpointRollingPolicy.build());
+            StreamingFileSink sink = new StreamingFileSink(builder, DEFAULT_BUCKET_CHECK_INTERVAL) {};
+
+//            final StreamingFileSink<Tuple2<Integer, Integer>> sink =
+//                    StreamingFileSink.forRowFormat(
+//                                    new Path(outputPath),
+//                                    (Encoder<Tuple2<Integer, Integer>>)
+//                                            (element, stream) -> {
+//                                                PrintStream out = new PrintStream(stream);
+//                                                out.println(element.f1);
+//                                            })
+//                            .withBucketAssigner(new KeyBucketAssigner())
+//                            .withRollingPolicy(OnCheckpointRollingPolicy.build())
+//                            .build();
 
             source.keyBy(0).addSink(sink);
         } else if (sinkToTest.equalsIgnoreCase("FileSink")) {
