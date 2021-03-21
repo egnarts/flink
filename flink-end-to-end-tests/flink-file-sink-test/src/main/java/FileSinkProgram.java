@@ -57,6 +57,18 @@ import static org.apache.flink.streaming.api.functions.sink.filesystem.Streaming
 public enum FileSinkProgram {
     ;
 
+    public static class DefaultRowFormatBuilder
+            extends StreamingFileSink.RowFormatBuilder<Tuple2<Integer, Integer>, String,
+            DefaultRowFormatBuilder> {
+        private static final long serialVersionUID = -8503344257202146718L;
+
+        private DefaultRowFormatBuilder(
+                Path basePath, Encoder<Tuple2<Integer, Integer>> encoder,
+                BucketAssigner<Tuple2<Integer, Integer>, String> bucketAssigner) {
+            super(basePath, encoder, bucketAssigner);
+        }
+    }
+
     public static void main(final String[] args) throws Exception {
         final ParameterTool params = ParameterTool.fromArgs(args);
         final String outputPath = params.getRequired("outputPath");
@@ -74,16 +86,16 @@ public enum FileSinkProgram {
         DataStream<Tuple2<Integer, Integer>> source = env.addSource(new Generator(10, 10, 60));
 
         if (sinkToTest.equalsIgnoreCase("StreamingFileSink")) {
-            StreamingFileSink.DefaultRowFormatBuilder<Tuple2<Integer, Integer>> builder = StreamingFileSink
-                    .forRowFormat(
-                            new Path(outputPath),
-                            (Encoder<Tuple2<Integer, Integer>>)
-                                    (element, stream) -> {
-                                        PrintStream out = new PrintStream(stream);
-                                        out.println(element.f1);
-                                    })
-                    .withBucketAssigner(new KeyBucketAssigner())
-                    .withRollingPolicy(OnCheckpointRollingPolicy.build());
+            DefaultRowFormatBuilder builder = new DefaultRowFormatBuilder(
+                    new Path(
+                            outputPath),
+                    (Encoder<Tuple2<Integer, Integer>>)
+                            (element, stream) -> {
+                                PrintStream out = new PrintStream(stream);
+                                out.println(element.f1);
+                            },
+                    new KeyBucketAssigner()).withRollingPolicy(OnCheckpointRollingPolicy.build());
+
             StreamingFileSink sink = new StreamingFileSink(builder, DEFAULT_BUCKET_CHECK_INTERVAL) {};
             source.keyBy(0).addSink(sink);
         } else if (sinkToTest.equalsIgnoreCase("FileSink")) {
