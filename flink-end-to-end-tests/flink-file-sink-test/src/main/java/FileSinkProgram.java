@@ -85,19 +85,6 @@ public enum FileSinkProgram {
                     .withBucketAssigner(new KeyBucketAssigner())
                     .withRollingPolicy(OnCheckpointRollingPolicy.build());
             StreamingFileSink sink = new StreamingFileSink(builder, DEFAULT_BUCKET_CHECK_INTERVAL) {};
-
-//            final StreamingFileSink<Tuple2<Integer, Integer>> sink =
-//                    StreamingFileSink.forRowFormat(
-//                                    new Path(outputPath),
-//                                    (Encoder<Tuple2<Integer, Integer>>)
-//                                            (element, stream) -> {
-//                                                PrintStream out = new PrintStream(stream);
-//                                                out.println(element.f1);
-//                                            })
-//                            .withBucketAssigner(new KeyBucketAssigner())
-//                            .withRollingPolicy(OnCheckpointRollingPolicy.build())
-//                            .build();
-
             source.keyBy(0).addSink(sink);
         } else if (sinkToTest.equalsIgnoreCase("FileSink")) {
             FileSink<Tuple2<Integer, Integer>> sink =
