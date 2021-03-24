@@ -106,7 +106,7 @@ public class StateApi {
         @Override
         public void processElement(Integer value, Context ctx, Collector<Integer> out)
                 throws Exception {
-            state.update(value + 1);
+            state.update(state.value() + 1);
             updateTimes.add(System.currentTimeMillis());
             out.collect(state.value());
         }
