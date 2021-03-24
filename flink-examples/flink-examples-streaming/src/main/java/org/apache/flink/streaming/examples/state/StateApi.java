@@ -22,8 +22,7 @@ import org.apache.flink.util.Collector;
 /** */
 public class StateApi {
     /** */
-    public static final class Generator
-            implements SourceFunction<Integer>, CheckpointedFunction {
+    public static final class Generator implements SourceFunction<Integer>, CheckpointedFunction {
 
         private static final long serialVersionUID = -2819385275681175792L;
 
@@ -125,11 +124,13 @@ public class StateApi {
         env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
         env.getCheckpointConfig().setCheckpointTimeout(60000);
         env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
-        env.getCheckpointConfig().enableExternalizedCheckpoints(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+        env.getCheckpointConfig()
+                .enableExternalizedCheckpoints(
+                        CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
 
         // get input data
         DataStream<Integer> source = env.addSource(new Generator(10, 10, 60));
-//        DataStream<Integer> text = env.fromElements(1, 2, 3);
+        //        DataStream<Integer> text = env.fromElements(1, 2, 3);
 
         DataStream<Void> counts =
                 source.keyBy(value -> value).process(new StatefulFunctionWithTime());
