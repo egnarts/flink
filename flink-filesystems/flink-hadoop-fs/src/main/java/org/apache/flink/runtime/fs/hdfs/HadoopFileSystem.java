@@ -147,7 +147,6 @@ public class HadoopFileSystem extends FileSystem {
             final long blockSize)
             throws IOException {
 
-        LOG.warn("Create a file(" + f + ").", new Throwable());
         final org.apache.hadoop.fs.FSDataOutputStream fdos =
                 this.fs.create(toHadoopPath(f), overwrite, bufferSize, replication, blockSize);
         return new HadoopDataOutputStream(fdos);
@@ -156,7 +155,6 @@ public class HadoopFileSystem extends FileSystem {
     @Override
     public HadoopDataOutputStream create(final Path f, final WriteMode overwrite)
             throws IOException {
-        LOG.warn("Create a file(" + f + ").", new Throwable());
         final org.apache.hadoop.fs.FSDataOutputStream fsDataOutputStream =
                 this.fs.create(toHadoopPath(f), overwrite == WriteMode.OVERWRITE);
         return new HadoopDataOutputStream(fsDataOutputStream);

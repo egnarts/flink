@@ -10,6 +10,7 @@ import org.apache.flink.api.java.utils.MultipleParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.state.FunctionInitializationContext;
 import org.apache.flink.runtime.state.FunctionSnapshotContext;
+import org.apache.flink.runtime.state.filesystem.FsStateBackend;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.checkpoint.CheckpointedFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -106,7 +107,12 @@ public class StateApi {
         @Override
         public void processElement(Integer value, Context ctx, Collector<Integer> out)
                 throws Exception {
-            state.update(state.value() + 1);
+            Integer stateValue = state.value();
+            if (stateValue == null) {
+                stateValue = 0;
+            }
+
+            state.update(stateValue + 1);
             updateTimes.add(System.currentTimeMillis());
             out.collect(state.value());
         }
@@ -125,9 +131,15 @@ public class StateApi {
         env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
         env.getCheckpointConfig().setCheckpointTimeout(60000);
         env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
+
         env.getCheckpointConfig()
                 .enableExternalizedCheckpoints(
                         CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+
+        env.setStateBackend(
+                new FsStateBackend(
+                        "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/checkpoints",
+                        false));
 
         // get input data
         DataStream<Integer> source = env.addSource(new Generator(1, 1000, 60));
