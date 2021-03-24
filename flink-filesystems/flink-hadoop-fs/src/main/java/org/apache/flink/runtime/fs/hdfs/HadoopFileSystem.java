@@ -55,7 +55,6 @@ public class HadoopFileSystem extends FileSystem {
      */
     public HadoopFileSystem(org.apache.hadoop.fs.FileSystem hadoopFileSystem) {
         this.fs = checkNotNull(hadoopFileSystem, "hadoopFileSystem");
-        LOG.warn("Initialize org.apache.hadoop.fs.FileSystem(" + fs + ").", new Throwable());
     }
 
     /**
@@ -190,7 +189,6 @@ public class HadoopFileSystem extends FileSystem {
 
     @Override
     public boolean rename(final Path src, final Path dst) throws IOException {
-        LOG.warn(src + " --> " + dst, new Throwable());
         return this.fs.rename(toHadoopPath(src), toHadoopPath(dst));
     }
 
