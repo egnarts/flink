@@ -1,5 +1,6 @@
 package org.apache.flink.streaming.examples.state;
 
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.ListState;
 import org.apache.flink.api.common.state.ListStateDescriptor;
 import org.apache.flink.api.common.state.ValueState;
@@ -86,7 +87,7 @@ public class StateApi {
 
     /** */
     public static class StatefulFunctionWithTime
-            extends KeyedProcessFunction<Integer, Integer, Void> {
+            extends KeyedProcessFunction<Integer, Integer, Integer> {
 
         ValueState<Integer> state;
 
@@ -104,10 +105,11 @@ public class StateApi {
         }
 
         @Override
-        public void processElement(Integer value, Context ctx, Collector<Void> out)
+        public void processElement(Integer value, Context ctx, Collector<Integer> out)
                 throws Exception {
             state.update(value + 1);
             updateTimes.add(System.currentTimeMillis());
+            out.collect(state.value());
         }
     }
 
@@ -129,11 +131,12 @@ public class StateApi {
                         CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
 
         // get input data
-        DataStream<Integer> source = env.addSource(new Generator(10, 10, 60));
+        DataStream<Integer> source = env.addSource(new Generator(1, 1000, 60));
         //        DataStream<Integer> text = env.fromElements(1, 2, 3);
 
-        DataStream<Void> counts =
-                source.keyBy(value -> value).process(new StatefulFunctionWithTime());
+        DataStream<String> counts =
+                source.keyBy(value -> value).process(new StatefulFunctionWithTime())
+                .map(value -> "value -> " + value);
 
         // emit result
         if (params.has("output")) {
