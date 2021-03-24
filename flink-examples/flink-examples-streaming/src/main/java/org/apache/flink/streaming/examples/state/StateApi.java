@@ -134,8 +134,9 @@ public class StateApi {
         //        DataStream<Integer> text = env.fromElements(1, 2, 3);
 
         DataStream<String> counts =
-                source.keyBy(value -> value).process(new StatefulFunctionWithTime())
-                .map(value -> "value -> " + value);
+                source.keyBy(value -> value)
+                        .process(new StatefulFunctionWithTime())
+                        .map(value -> "value -> " + value);
 
         // emit result
         if (params.has("output")) {
