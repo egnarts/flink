@@ -12,14 +12,11 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
 
-/**
- *
- */
+/** */
 public class StateApi {
-    /**
-     *
-     */
-    public static class StatefulFunctionWithTime extends KeyedProcessFunction<Integer, Integer, Void> {
+    /** */
+    public static class StatefulFunctionWithTime
+            extends KeyedProcessFunction<Integer, Integer, Void> {
 
         ValueState<Integer> state;
 
@@ -27,15 +24,18 @@ public class StateApi {
 
         @Override
         public void open(Configuration parameters) {
-            ValueStateDescriptor<Integer> stateDescriptor = new ValueStateDescriptor<>("state", Types.INT);
+            ValueStateDescriptor<Integer> stateDescriptor =
+                    new ValueStateDescriptor<>("state", Types.INT);
             state = getRuntimeContext().getState(stateDescriptor);
 
-            ListStateDescriptor<Long> updateDescriptor = new ListStateDescriptor<>("times", Types.LONG);
+            ListStateDescriptor<Long> updateDescriptor =
+                    new ListStateDescriptor<>("times", Types.LONG);
             updateTimes = getRuntimeContext().getListState(updateDescriptor);
         }
 
         @Override
-        public void processElement(Integer value, Context ctx, Collector<Void> out) throws Exception {
+        public void processElement(Integer value, Context ctx, Collector<Void> out)
+                throws Exception {
             state.update(value + 1);
             updateTimes.add(System.currentTimeMillis());
         }
@@ -54,7 +54,8 @@ public class StateApi {
         // get input data
         DataStream<Integer> text = env.fromElements(1, 2, 3);
 
-        DataStream<Void> counts = text.keyBy(value -> value).process(new StatefulFunctionWithTime());
+        DataStream<Void> counts =
+                text.keyBy(value -> value).process(new StatefulFunctionWithTime());
 
         // emit result
         if (params.has("output")) {
