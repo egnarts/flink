@@ -1,6 +1,5 @@
 package org.apache.flink.streaming.examples.state;
 
-import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.ListState;
 import org.apache.flink.api.common.state.ListStateDescriptor;
 import org.apache.flink.api.common.state.ValueState;
