@@ -337,6 +337,32 @@ under the License.
 						</configuration>
 					</execution>
 
+					<!-- StateApi -->
+					<execution>
+						<id>StateApi</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classifier>StateApi</classifier>
+
+							<archive>
+								<manifestEntries>
+									<program-class>org.apache.flink.streaming.examples.state.StateApi</program-class>
+								</manifestEntries>
+							</archive>
+
+							<includes>
+								<include>org/apache/flink/streaming/examples/state/StateApi.class</include>
+								<include>org/apache/flink/streaming/examples/state/StateApi*.class</include>
+<!--								<include>org/apache/flink/streaming/examples/state/util/WordCountData.class</include>-->
+								<include>META-INF/LICENSE</include>
+								<include>META-INF/NOTICE</include>
+							</includes>
+						</configuration>
+					</execution>
+
 					<!-- SocketWindowWordCount -->
 					<execution>
 						<id>SocketWindowWordCount</id>
