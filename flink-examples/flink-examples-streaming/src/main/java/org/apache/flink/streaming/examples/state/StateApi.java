@@ -66,10 +66,10 @@ public class StateApi {
         ExistingSavepoint savepoint =
                 Savepoint.load(
                         bEnv,
-                        "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/checkpoints/90d867e06ddb695dfb920e7041381092/chk-19/_metadata",
+                        "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/checkpoints/4ec306ac8e327fdbc369dadb5ef0a351/chk-16/_metadata",
                         new MemoryStateBackend());
         DataSet<KeyedState> keyedStateDataSet =
-                savepoint.readKeyedState("75f236f423d43ae0113f80f0a7e051a1", new ReaderFunction());
+                savepoint.readKeyedState("StatefulFunctionWithTime", new ReaderFunction());
 
         List<KeyedState> keyedStates = keyedStateDataSet.collect();
         for (KeyedState ks : keyedStates) {

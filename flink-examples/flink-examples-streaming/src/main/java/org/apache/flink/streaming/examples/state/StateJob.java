@@ -148,6 +148,7 @@ public class StateJob {
         DataStream<String> counts =
                 source.keyBy(value -> value)
                         .process(new StatefulFunctionWithTime())
+                        .uid("StatefulFunctionWithTime")
                         .map(value -> "value -> " + value);
 
         // emit result
@@ -157,6 +158,6 @@ public class StateJob {
             counts.print();
         }
         // execute program
-        env.execute("Streaming StateApi");
+        env.execute("Streaming StatefulJob");
     }
 }
