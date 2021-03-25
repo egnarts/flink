@@ -343,15 +343,15 @@ under the License.
 						</configuration>
 					</execution>
 
-					<!-- StateApi -->
+					<!-- StateReadApi -->
 					<execution>
-						<id>StateApi</id>
+						<id>StateReadApi</id>
 						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
 						<configuration>
-							<classifier>StateApi</classifier>
+							<classifier>StateReadApi</classifier>
 
 							<archive>
 								<manifestEntries>
@@ -360,8 +360,33 @@ under the License.
 							</archive>
 
 							<includes>
-								<include>org/apache/flink/streaming/examples/state/StateApi.class</include>
-								<include>org/apache/flink/streaming/examples/state/StateApi*.class</include>
+								<include>org/apache/flink/streaming/examples/state/StateReadApi.class</include>
+								<include>org/apache/flink/streaming/examples/state/StateReadApi*.class</include>
+								<include>META-INF/LICENSE</include>
+								<include>META-INF/NOTICE</include>
+							</includes>
+						</configuration>
+					</execution>
+
+					<!-- StateWriteApi -->
+					<execution>
+						<id>StateWriteApi</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classifier>StateWriteApi</classifier>
+
+							<archive>
+								<manifestEntries>
+									<program-class>org.apache.flink.streaming.examples.state.StateWriteApi</program-class>
+								</manifestEntries>
+							</archive>
+
+							<includes>
+								<include>org/apache/flink/streaming/examples/state/StateWriteApi.class</include>
+								<include>org/apache/flink/streaming/examples/state/StateWriteApi*.class</include>
 								<include>META-INF/LICENSE</include>
 								<include>META-INF/NOTICE</include>
 							</includes>
