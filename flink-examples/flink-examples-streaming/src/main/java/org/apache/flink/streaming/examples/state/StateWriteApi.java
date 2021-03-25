@@ -55,8 +55,8 @@ public class StateWriteApi {
         }
     }
 
-    public static void main(String[] args) {
-        ExecutionEnvironment bEnv = ExecutionEnvironment.getExecutionEnvironment();
+    public static void main(String[] args) throws Exception {
+        ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
         List<KeyedState> states = Lists.newArrayList();
         KeyedState state = new KeyedState();
         state.key = 0;
@@ -65,7 +65,7 @@ public class StateWriteApi {
         state.times.add(new Date().getTime());
 
         states.add(state);
-        DataSet<KeyedState> dataSet = bEnv.fromCollection(states);
+        DataSet<KeyedState> dataSet = env.fromCollection(states);
 
         BootstrapTransformation<KeyedState> transformation =
                 OperatorTransformation.bootstrapWith(dataSet)
@@ -77,6 +77,6 @@ public class StateWriteApi {
                 .write(
                         "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/savepoints/");
 
-        System.out.println("Write");
+        env.execute("write state");
     }
 }
