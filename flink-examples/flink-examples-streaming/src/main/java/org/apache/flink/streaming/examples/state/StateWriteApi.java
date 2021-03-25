@@ -76,5 +76,7 @@ public class StateWriteApi {
                 .withOperator("StatefulFunctionWithTime", transformation)
                 .write(
                         "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/savepoints/");
+
+        System.out.println("Write");
     }
 }
