@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /** */
-public class StateApi {
+public class StateReadApi {
     /** */
     public static class KeyedState {
         public int key;

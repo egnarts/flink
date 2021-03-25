@@ -355,7 +355,7 @@ under the License.
 
 							<archive>
 								<manifestEntries>
-									<program-class>org.apache.flink.streaming.examples.state.StateApi</program-class>
+									<program-class>org.apache.flink.streaming.examples.state.StateReadApi</program-class>
 								</manifestEntries>
 							</archive>
 

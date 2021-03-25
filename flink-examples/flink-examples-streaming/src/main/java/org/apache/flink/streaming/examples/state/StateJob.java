@@ -138,7 +138,7 @@ public class StateJob {
 
         env.setStateBackend(
                 new FsStateBackend(
-                        "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/checkpoints",
+                        "hdfs://ip-172-31-36-202.ap-northeast-2.compute.internal:9000/flink/checkpoints/state-test",
                         false));
 
         // get input data
