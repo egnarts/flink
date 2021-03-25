@@ -16,6 +16,7 @@ import org.apache.flink.state.api.functions.KeyedStateBootstrapFunction;
 
 import org.apache.commons.compress.utils.Lists;
 
+import java.util.Date;
 import java.util.List;
 
 /** */
@@ -57,7 +58,13 @@ public class StateWriteApi {
     public static void main(String[] args) {
         ExecutionEnvironment bEnv = ExecutionEnvironment.getExecutionEnvironment();
         List<KeyedState> states = Lists.newArrayList();
-        states.add(new KeyedState());
+        KeyedState state = new KeyedState();
+        state.key = 0;
+        state.value = 30;
+        state.times = Lists.newArrayList();
+        state.times.add(new Date().getTime());
+
+        states.add(state);
         DataSet<KeyedState> dataSet = bEnv.fromCollection(states);
 
         BootstrapTransformation<KeyedState> transformation =
