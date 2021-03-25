@@ -644,7 +644,8 @@ under the License.
 								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-TopSpeedWindowing.jar" tofile="${project.basedir}/target/TopSpeedWindowing.jar" />
 								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-WindowJoin.jar" tofile="${project.basedir}/target/WindowJoin.jar" />
 								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-WordCount.jar" tofile="${project.basedir}/target/WordCount.jar" />
-								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-StateApi.jar" tofile="${project.basedir}/target/StateApi.jar" />
+								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-StateReadApi.jar" tofile="${project.basedir}/target/StateReadApi.jar" />
+								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-StateWriteApi.jar" tofile="${project.basedir}/target/StateWriteApi.jar" />
 								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-StateJob.jar" tofile="${project.basedir}/target/StateJob.jar" />
 								<copy file="${project.basedir}/target/flink-examples-streaming_${scala.binary.version}-${project.version}-SocketWindowWordCount.jar" tofile="${project.basedir}/target/SocketWindowWordCount.jar" />
 							</target>
